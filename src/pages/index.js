@@ -1,7 +1,7 @@
 import EventList from "../../components/events/eventList";
-import { DUMMY_EVENTS, getFeaturedEvents } from "../../dummy-data";
-import fs from "fs/promises";
-import path from "path";
+// import { DUMMY_EVENTS, getFeaturedEvents } from "../../dummy-data";
+// import fs from "fs/promises";
+// import path from "path";
 
 const HomePage = (props) => {
   // const featuredEvents = getFeaturedEvents();
@@ -15,9 +15,15 @@ const HomePage = (props) => {
 };
 
 export const getStaticProps = async (context) => {
-  const filePath = path.join(process.cwd(), "dummy-data.json");
-  const jsonData = await fs.readFile(filePath);
-  const data = JSON.parse(jsonData);
+  // const filePath = path.join(process.cwd(), "dummy-data.json");
+  // const jsonData = await fs.readFile(filePath);
+  // const data = JSON.parse(jsonData);
+
+  const rawData = await fetch(
+    "https://nextjs-course-40339-default-rtdb.asia-southeast1.firebasedatabase.app/events.json"
+  );
+  
+  const data = await rawData.json();
 
   if (!data) {
     return {
