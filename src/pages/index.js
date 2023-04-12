@@ -1,4 +1,5 @@
 import EventList from "../../components/events/eventList";
+import { getData } from "../../helpers/api-util";
 // import { DUMMY_EVENTS, getFeaturedEvents } from "../../dummy-data";
 // import fs from "fs/promises";
 // import path from "path";
@@ -19,11 +20,13 @@ export const getStaticProps = async (context) => {
   // const jsonData = await fs.readFile(filePath);
   // const data = JSON.parse(jsonData);
 
-  const rawData = await fetch(
-    "https://nextjs-course-40339-default-rtdb.asia-southeast1.firebasedatabase.app/events.json"
-  );
-  
-  const data = await rawData.json();
+  // const rawData = await fetch(
+  //   "https://nextjs-course-40339-default-rtdb.asia-southeast1.firebasedatabase.app/events.json"
+  // );
+
+  // const data = await rawData.json();
+
+  const data = await getData();
 
   if (!data) {
     return {
@@ -40,7 +43,7 @@ export const getStaticProps = async (context) => {
     props: {
       events: data,
     },
-    revalidate: 600,
+    revalidate: 1800,
   };
 };
 
