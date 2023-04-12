@@ -5,6 +5,7 @@ import EventSummary from "../../../components/event-detail/event-summary";
 import EventLogistics from "../../../components/event-detail/event-logistics";
 import EventContent from "../../../components/event-detail/event-content";
 import { getData } from "../../../helpers/api-util";
+import Head from "next/head";
 // import fs from "fs/promises";
 // import path from "path";
 
@@ -23,6 +24,10 @@ const EventDetailPage = (props) => {
 
   return (
     <Fragment>
+      <Head>
+        <title>{`${title}: NextJS Events`}</title>
+        <meta name="description" content={description} />
+      </Head>
       <EventSummary title={title} />
       <EventLogistics
         date={date}

@@ -1,8 +1,7 @@
-import { useRouter } from "next/router";
-
 import EventList from "../../../components/events/eventList";
 import ResultsTitle from "../../../components/results-title/results-title";
 import { getFilteredEvents } from "../../../helpers/api-util";
+import Head from "next/head";
 
 const FilteredEventsPage = (props) => {
   // const router = useRouter();
@@ -14,7 +13,7 @@ const FilteredEventsPage = (props) => {
 
   const { hasError, filteredEvents, filterDate } = props;
   if (hasError) {
-    return <div>Error!</div>;
+    return <div className="center">Error! Invalid filters</div>;
   }
 
   if (!filteredEvents || filteredEvents.length === 0) {
@@ -26,6 +25,10 @@ const FilteredEventsPage = (props) => {
 
   return (
     <>
+      <Head>
+        <title>{`Events on ${filteredMonth}/${filteredYear}: NextJS Events`}</title>
+        <meta name="description" content={`Events on ${filteredMonth}/${filteredYear}`} />
+      </Head>
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </>
