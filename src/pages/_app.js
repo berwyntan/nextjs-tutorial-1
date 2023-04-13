@@ -8,6 +8,7 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>NextJS Events</title>
         <meta name="description" content="Find or create events for you" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Component {...pageProps} />
     </Layout>

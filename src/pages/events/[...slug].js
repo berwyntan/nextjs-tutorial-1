@@ -12,23 +12,36 @@ const FilteredEventsPage = (props) => {
   // }
 
   const { hasError, filteredEvents, filterDate } = props;
+  const { filteredYear, filteredMonth } = filterDate;
+
+  const date = new Date(filteredYear, filteredMonth - 1);
+
+  const pageHeadData = (
+    <Head>
+      <title>{`Events on ${filteredMonth}/${filteredYear}: NextJS Events`}</title>
+      <meta
+        name="description"
+        content={`Events on ${filteredMonth}/${filteredYear}`}
+      />
+    </Head>
+  );
+
   if (hasError) {
     return <div className="center">Error! Invalid filters</div>;
   }
 
   if (!filteredEvents || filteredEvents.length === 0) {
-    return <p>No events found for the chosen filter!</p>;
+    return (
+      <>
+        {pageHeadData}
+        <p>No events found for the chosen filter!</p>
+      </>
+    );
   }
-  const { filteredYear, filteredMonth } = filterDate;
-
-  const date = new Date(filteredYear, filteredMonth - 1);
 
   return (
     <>
-      <Head>
-        <title>{`Events on ${filteredMonth}/${filteredYear}: NextJS Events`}</title>
-        <meta name="description" content={`Events on ${filteredMonth}/${filteredYear}`} />
-      </Head>
+      {pageHeadData}
       <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
     </>
