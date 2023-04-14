@@ -21,7 +21,7 @@ const EventDetailPage = (props) => {
     return <div className="center">Loading...</div>;
   }
 
-  const { title, date, location, image, description } = eventInfo;
+  const { title, date, location, image, description, id: eventId } = eventInfo;
 
   return (
     <Fragment>
