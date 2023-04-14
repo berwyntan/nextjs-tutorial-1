@@ -1,6 +1,7 @@
 import Head from "next/head";
 import EventList from "../../components/events/eventList";
 import { getData } from "../../helpers/api-util";
+import NewsletterRegistration from "../../components/input/newsletter-registration";
 // import { DUMMY_EVENTS, getFeaturedEvents } from "../../dummy-data";
 // import fs from "fs/promises";
 // import path from "path";
@@ -14,6 +15,7 @@ const HomePage = (props) => {
         <title>NextJS Events</title>
         <meta name="description" content="Find or create events for you" />
       </Head>
+      <NewsletterRegistration />
       {/* <EventList items={featuredEvents} /> */}
       <EventList items={props.events} />
     </>

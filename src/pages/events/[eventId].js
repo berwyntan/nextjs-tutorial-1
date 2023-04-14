@@ -6,6 +6,7 @@ import EventLogistics from "../../../components/event-detail/event-logistics";
 import EventContent from "../../../components/event-detail/event-content";
 import { getData } from "../../../helpers/api-util";
 import Head from "next/head";
+import Comments from "../../../components/input/comments";
 // import fs from "fs/promises";
 // import path from "path";
 
@@ -38,6 +39,7 @@ const EventDetailPage = (props) => {
       <EventContent>
         <p>{description}</p>
       </EventContent>
+      <Comments eventId={eventId} />
     </Fragment>
   );
 };
