@@ -1,5 +1,6 @@
 import Link from "next/link";
 import classes from "./mainHeader.module.css";
+import { UserButton } from "@clerk/nextjs";
 
 const MainHeader = () => {
   return (
@@ -14,6 +15,7 @@ const MainHeader = () => {
           </li>
         </ul>
       </nav>
+      <UserButton />
     </header>
   );
 };
