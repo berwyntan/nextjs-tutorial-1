@@ -7,15 +7,17 @@ const register = async (req, res) => {
     if (!email || !email.includes("@")) {
       return res.sendStatus(400);
     }
-    const client = await MongoClient.connect(
-      process.env.MONGO_URL
-    );
-    const db = client.db();
-    await db.collection("emails").insertOne({ email: email });
 
-    client.close();
+    try {
+      const client = await MongoClient.connect(process.env.MONGO_URL);
+      const db = client.db();
+      await db.collection("emails").insertOne({ email: email });
 
-    return res.status(201).json({ email: email });
+      client.close();
+      return res.status(201).json({ email: email });
+    } catch (error) {
+      return res.status(500).json({message: "Internal server errorzz"});
+    }
   }
 };
 

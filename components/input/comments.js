@@ -19,7 +19,7 @@ function Comments(props) {
       fetch(`/api/comment/${eventId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         setComments(data.comments)
       });
     }

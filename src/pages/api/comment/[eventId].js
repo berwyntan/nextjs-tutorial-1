@@ -1,5 +1,16 @@
 import { MongoClient } from "mongodb";
 
+const connectDB = async () => {
+  const client = await MongoClient.connect(process.env.MONGO_URL);
+  return client;
+};
+
+const insertDocument = async (client, document) => {
+  const db = client.db();
+  const result = await db.collection("comments").insertOne(document);
+  return result;
+};
+
 const addComment = async (req, res) => {
   const { eventId } = req.query;
   if (req.method === "POST") {
@@ -12,31 +23,46 @@ const addComment = async (req, res) => {
       email: email,
       name: name,
       text: text,
+    };
+    let client;
+    try {
+      client = await connectDB();
+    } catch (error) {
+      res.sendStatus(500);
+      return;
     }
-    // mongo
-    const client = await MongoClient.connect(
-      process.env.MONGO_URL
-    );
-    const db = client.db();
-    const result = await db.collection("comments").insertOne(newComment);
 
-    newComment.id = result.insertedId
+    try {
+      const result = await insertDocument(client, newComment);
 
-    client.close();
+      newComment.id = result.insertedId;
+
+      client.close();
+    } catch (error) {}
+
     return res.status(201).json(newComment);
+
+    // mongo
+    // const client = await MongoClient.connect(process.env.MONGO_URL);
+
+    // const db = client.db();
+    // const result = await db.collection("comments").insertOne(newComment);
   }
   if (req.method === "GET") {
-    const data = [
-      {
-        text: "comment 1",
-        name: "BT"
-      },
-      {
-        text: "comment 2",
-        name: "tcw"
-      },
-    ]
-    return res.status(200).json({comments: data})
+    try {
+      const client = await MongoClient.connect(process.env.MONGO_URL);
+      const db = client.db();
+      const result = await db
+        .collection("comments")
+        .find({ eventId: eventId })
+        .sort({ _id: -1 })
+        .toArray();
+      // console.log(result);
+      client.close();
+      return res.status(200).json({ comments: result });
+    } catch (error) {
+      return res.status(500).json({ message: "Server errorz" });
+    }
   }
 };
 
